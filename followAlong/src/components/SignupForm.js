@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
-import Button from "../theme/Button";
+import { useForm } from '../hooks/useForm';
+import Button from './../theme/Button';
 
-const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: 'flex',
+    flexWrap: 'wrap'
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -21,23 +22,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const initialFormValues = {
+  email: '',
+  username: ''
+};
+
 export default function SignupForm() {
   const classes = useStyles();
-  const [firstName, setFirstName] = useState("");
 
-  const handleChanges = e => {
-    setFirstName(e.target.value);
-  };
+  const formCallback = ()=> {
+    console.log(values);
+    alert(`${values.username} ${values.email}`);
+  }
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    alert(firstName);
-  };
 
-  const clearForm = e => {
-    e.preventDefault();
-    setFirstName("");
-  };
+  const [values, clearForm, handleSubmit, handleChanges] = useForm(
+    'signUpForm',
+    initialFormValues,
+    formCallback
+  );
 
   return (
     <div p={2} className="form">
@@ -46,22 +49,30 @@ export default function SignupForm() {
           <legend>Add New Client</legend>
           <TextField
             id="outlined-name"
-            label="First Name"
+            label="Username"
             className={classes.textField}
-            name="firstName"
-            value={firstName}
+            value={values.username}
             onChange={handleChanges}
             margin="normal"
             variant="outlined"
+            name="username"
           />
-          <div className="flexer">
-            <Button color="red" onClick={clearForm}>
-              Clear
-            </Button>
-            <Button color="blue" type="submit">
-              Submit
-            </Button>
-          </div>
+          <TextField
+            id="outlined-name"
+            label="Email"
+            className={classes.textField}
+            value={values.email}
+            onChange={handleChanges}
+            margin="normal"
+            variant="outlined"
+            name="email"
+          />
+          <Button color="blue" type="submit">
+            Submit
+          </Button>
+          <Button color="red" onClick={clearForm}>
+            Clear
+          </Button>
         </fieldset>
       </form>
     </div>
