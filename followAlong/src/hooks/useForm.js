@@ -1,8 +1,12 @@
 import { useLocalStorage } from "./useLocalStorage";
 
 export const useForm = (key, initialValues, cb) => {
-  // inputs - handleChange, state (dynamically manage any number of inputs)
+  console.log("*** useForm HOOK ***");
   const [values, setValues] = useLocalStorage(key, initialValues);
+  console.log("values =>", values);
+  console.log("key =>", key);
+  console.log("initialValues =>", initialValues);
+  console.log("cb =>", cb);
 
   const handleChanges = (e) => {
     setValues({
@@ -11,11 +15,10 @@ export const useForm = (key, initialValues, cb) => {
     });
   };
 
-  // form/buttons - submit, clear
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
     cb();
-    setValues(initialValues)
+    setValues(initialValues);
   };
 
   const clearForm = (e) => {
@@ -23,19 +26,6 @@ export const useForm = (key, initialValues, cb) => {
     setValues(initialValues);
   };
 
+  console.log("*** useForm HOOK END ***");
   return [values, clearForm, handleSubmit, handleChanges];
 };
-
-// Protip:
-/*
-
-this function can control multiple inputs in a class component:
-
-  const handleChanges = e => {
-    console.log(e.target.name);
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-*/
