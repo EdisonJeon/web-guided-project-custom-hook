@@ -1,24 +1,24 @@
-import { useLocalStorage } from './useLocalStorage';
+import { useLocalStorage } from "./useLocalStorage";
 
 export const useForm = (key, initialValues, cb) => {
   // inputs - handleChange, state (dynamically manage any number of inputs)
   const [values, setValues] = useLocalStorage(key, initialValues);
 
-  const handleChanges = e => {
+  const handleChanges = (e) => {
     setValues({
       ...values,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   // form/buttons - submit, clear
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     if (e) e.preventDefault();
     cb();
     setValues(initialValues)
   };
 
-  const clearForm = e => {
+  const clearForm = (e) => {
     e.preventDefault();
     setValues(initialValues);
   };
