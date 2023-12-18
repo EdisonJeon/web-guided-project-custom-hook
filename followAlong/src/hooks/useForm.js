@@ -9,9 +9,10 @@ export const useForm = (key, initialValues, cb) => {
   console.log("cb =>", cb);
 
   const handleChanges = (e) => {
+    const { name, value } = e.target;
     setValues({
       ...values,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
